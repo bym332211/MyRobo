@@ -13,7 +13,7 @@ from tornado.options import define, options
 from chat_adapter import chat as Chat
 from tts_adapter import tts as Tts
 
-define("port", default=8888, help="run on the given port", type=int)
+define("port", default=7777, help="run on the given port", type=int)
 chat = Chat()
 tts = Tts()
 
