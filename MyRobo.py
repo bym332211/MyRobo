@@ -12,27 +12,38 @@ import tornado.web
 from tornado.options import define, options
 from chat_adapter import chat as Chat
 from tts_adapter import tts as Tts
+from asr_adapter import asr as Asr
+from recoder_adapter import recoder as Rec
 
 define("port", default=7777, help="run on the given port", type=int)
 chat = Chat()
 tts = Tts()
-
-
+asr = Asr()
+rec = Rec()
 class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
         content = self.get_argument('chat')
+        self.write("Robo say:" + roboSay(content))
 
-        res_seq = chat.chat(content)
+class AsrHandler(tornado.web.RequestHandler):
 
-        tts.say(res_seq)
-        self.write("Robo say:" + res_seq)
+    def get(self):
+        rec.start()
+        content = asr.read_local()
+        self.write("Robo say:" + roboSay(content))
+
+def roboSay(input):
+    res_seq = chat.chat(input)
+    tts.say(res_seq)
+    return res_seq
 
 
 def main():
     tornado.options.parse_command_line()
     application = tornado.web.Application([
-        (r"/", MainHandler),
+        (r"/chat", MainHandler),
+        (r"/asr", AsrHandler),
     ])
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)

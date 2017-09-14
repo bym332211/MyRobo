@@ -8,6 +8,10 @@ class chat:
     tulin_key = '88461fdcb25949e198843b4b6c776cec'
     tulin_url = 'http://www.tuling123.com/openapi/api'
     def chat(self, seq):
+
+        self.callTulin(seq)
+
+    def callTulin(self, seq):
         data = {'key':self.tulin_key,
                 'info':seq,
                 'userid':'t1'}
@@ -19,7 +23,6 @@ class chat:
         res_content = res_dict['text']
         print(res_content)
         return res_content
-
 
 if __name__ == '__main__':
     chat_rb = chat()
