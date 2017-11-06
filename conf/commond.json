@@ -1,150 +1,80 @@
 {
-  "music": {
-    "cmd_type": "music",
-    "cmds": {
-      "cmd": {
-        "type": "play",
-        "valueList": {
-          "value": "音乐",
-          "value": "唱歌"
-        }
-      },
-      "cmd": {
-        "type": "next",
-        "valueList": {
-          "value": "下一首",
-          "value": "下首",
-          "value": "换歌"
-        }
-      },
-      "cmd": {
-        "type": "prev",
-        "valueList": {
-          "value": "上一首",
-          "value": "上首"
-        }
-      },
-      "cmd": {
-        "type": "stop",
-        "valueList": {
-          "value": "停止",
-          "value": "停止播放"
-        }
-      },
-      "cmd": {
-        "type": "pause",
-        "valueList": {
-          "value": "暂停",
-          "value": "暂停播放"
-        }
-      },
-      "cmd": {
-        "type": "continue",
-        "valueList": {
-          "value": "继续",
-          "value": "继续播放"
-        }
-      },
-      "cmd": {
-        "type": "random",
-        "valueList": {
-          "value": "随机播放",
-          "value": "随机"
-        }
-      },
-      "cmd": {
-        "type": "single",
-        "valueList": {
-          "value": "单曲循环",
-          "value": "单曲"
-        }
-      },
-      "cmd": {
-        "type": "list",
-        "valueList": {
-          "value": "列表循环",
-          "value": "循环"
-        }
-      },
-      "cmd": {
-        "type": "list",
-        "valueList": {
-          "value": "列表循环",
-          "value": "循环"
-        }
-      }
+  "music":{
+    "play":{
+      "音乐":"play",
+      "唱歌":"play"
+    },
+    "next":{
+      "下一首":"next",
+      "下首":"next",
+      "换歌":"next"
+    },
+    "prev":{
+      "上一首":"prev",
+      "上首":"prev"
+    },
+    "stop":{
+      "停止":"stop",
+      "停止播放":"stop"
+    },
+    "pause":{
+      "暂停":"pause",
+      "暂停播放":"pause"
+    },
+    "continue":{
+      "继续":"continue",
+      "继续播放":"continue"
+    },
+    "random":{
+      "随机":"random",
+      "随机播放":"random"
+    },
+    "single":{
+      "单曲循环":"random",
+      "单曲":"random"
+    },
+    "list":{
+      "列表循环":"list",
+      "循环":"list"
     }
-  ,
+  },
   "common": {
-    "cmd_type": "common",
-    "cmds": {
-      "cmd": {
-        "type": "stop",
-        "valueList": {
-          "value": "停",
-          "value": "停止"
-        }
-      },
-      "cmd": {
-        "type": "loud",
-        "valueList": {
-          "value": "大声",
-          "value": "大点声",
-          "value": "响一点",
-          "value": "大声点"
-        }
-      },
-      "cmd": {
-        "type": "loud",
-        "valueList": {
-          "value": "小声",
-          "value": "小点声",
-          "value": "轻一点",
-          "value": "小声点"
-        }
-      },
-      "cmd": {
-        "type": "cancle",
-        "valueList": {
-          "value": "取消",
-          "value": "暂停",
-          "value": "别听我的"
-        }
-      },
-      "cmd": {
-        "type": "cancle",
-        "valueList": {
-          "value": "继续",
-          "value": "别暂停",
-          "value": "听我的"
-        }
-      }
+    "stop": {
+      "停": "stop",
+      "停止": "stop"
+    },
+    "loud": {
+      "大声": "loud",
+      "大点声": "loud",
+      "大声点": "loud",
+      "响一点": "loud"
+    },
+    "quiet": {
+      "小声": "quiet",
+      "小点声": "quiet",
+      "轻一点": "quiet",
+      "小声点": "quiet"
+    },
+    "cancle": {
+      "取消": "cancle",
+      "暂停": "cancle"
+    },
+    "continue": {
+      "继续": "continue",
+      "别暂停": "continue"
     }
   },
   "other": {
-    "cmd_type": "other",
-    "cmds": {
-      "cmd": {
-        "type": "search",
-        "valueList": {
-          "value": "百度",
-          "value": "搜索"
-        }
-      },
-      "cmd": {
-        "type": "time",
-        "valueList": {
-          "value": "时间",
-          "value": "几点"
-        }
-      }
+    "search": {
+      "百度": "search",
+      "搜索": "search"
     },
-    "cmd": {
-        "type": "weather",
-        "valueList": {
-          "value": "天气"
-        }
-      }
+    "time": {
+      "时间": "time",
+      "几点": "time"
+    },
+    "weather": {
+      "天气": "weather"
     }
   }
 }
