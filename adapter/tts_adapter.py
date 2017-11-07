@@ -42,7 +42,7 @@ class tts:
             with open(mp3, 'wb') as f:
                 print('create ' + mp3)
                 f.write(result)
-
+        time.sleep(1)
         pygame.mixer.init()
         print("Alert!!")
         print('play ' + mp3)

@@ -16,13 +16,12 @@ from adapter.recoder_adapter import recoder as Rec
 from adapter.tts_adapter import tts as Tts
 from adapter.commonds_adapter import cmdLoader as Cmd
 from adapter.music_adapter import music as Music
-from adapter.listener_adapter import listener as Listener
 
 define("port", default=7777, help="run on the given port", type=int)
 chat = Chat()
 tts = Tts()
 asr = Asr()
-rec = Rec()
+
 cmd = Cmd()
 music = Music()
 # listener = Listener()
@@ -35,6 +34,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class AsrHandler(tornado.web.RequestHandler):
     def get(self):
+        rec = Rec()
         rec.start()
         content = asr.read_local()
         res = getResponse(content)
