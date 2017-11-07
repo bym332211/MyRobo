@@ -24,7 +24,6 @@ asr = Asr()
 
 cmd = Cmd()
 music = Music()
-# listener = Listener()
 currentMusicIdx = 0
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -39,6 +38,10 @@ class AsrHandler(tornado.web.RequestHandler):
         content = asr.read_local()
         res = getResponse(content)
         self.write("Robo say:" + res)
+
+class WebHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('./web/test.html', name="world")
 
 def getResponse(content):
     res = doCmd(content)
@@ -95,6 +98,7 @@ def main():
     application = tornado.web.Application([
         (r"/chat", MainHandler),
         (r"/asr", AsrHandler),
+        (r"/web", WebHandler),
     ])
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
