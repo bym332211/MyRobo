@@ -3,12 +3,13 @@
 #
 # Copyright 2009 Facebook
 #
-
+import os
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
 import threading
+
 from adapter.asr_adapter import asr as Asr
 from tornado.options import define, options
 from adapter.chat_adapter import chat as Chat
@@ -17,7 +18,7 @@ from adapter.tts_adapter import tts as Tts
 from adapter.commonds_adapter import cmdLoader as Cmd
 from adapter.music_adapter import music as Music
 
-define("port", default=7777, help="run on the given port", type=int)
+define("port", default=7778, help="run on the given port", type=int)
 chat = Chat()
 tts = Tts()
 asr = Asr()
@@ -27,7 +28,7 @@ music = Music()
 currentMusicIdx = 0
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        content = self.get_argument('chat')
+        content = self.get_argument('content')
         res = getResponse(content)
         self.write("Robo say:" + res)
 
@@ -41,7 +42,18 @@ class AsrHandler(tornado.web.RequestHandler):
 
 class WebHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render('./web/test.html', name="world")
+        content = "hi"
+        res = getResponse(content)
+        self.render('./web/test.html', seq=content, res=res)
+
+class AjaxHandler(tornado.web.RequestHandler):
+    def post(self):
+        type = self.get_argument('type')
+        content = self.get_argument('content')
+        res = getResponse(content)
+        respon = {'res': res}
+        respon_json = tornado.escape.json_encode(respon)
+        self.write(res)
 
 def getResponse(content):
     res = doCmd(content)
@@ -79,7 +91,8 @@ def playMusic():
 
 def roboSay(input):
     res_seq = chat.chat(input)
-    tts.say(res_seq)
+    tmp = res_seq
+    tts.say(tmp)
     return res_seq
 #
 # class abc:
@@ -95,12 +108,17 @@ def main():
     # a = abc()
     # a.start()
     tornado.options.parse_command_line()
+    settings = {
+        "static_path": os.path.join(os.path.dirname(__file__), "web/static")
+    }  # 配置静态文件路径
     application = tornado.web.Application([
         (r"/chat", MainHandler),
         (r"/asr", AsrHandler),
         (r"/web", WebHandler),
-    ])
+        (r"/ajax", AjaxHandler),
+    ], **settings)
     http_server = tornado.httpserver.HTTPServer(application)
+    print(options.port)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
 

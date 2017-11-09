@@ -1,18 +1,87 @@
 <!DOCTYPE html>
-<html lang=”zh-CN”>
-    <head>
-        <meta charset=”utf-8″>
-        <title>title</title>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic Draggable - jQuery EasyUI Demo</title>
+    <script src="static/js/jquery/jquery.min.js"></script>
+    <script src="static/js/jquery/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/bootstrap/bootstrap-switch.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.8.2/umd/popper.js"></script>
+    <script src="static/js/bootstrap/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap/bootstrap-switch.min.js"></script>
 
-    </head>
-    <body>
-        <div class=”main”>
-            <div class=”container”>
-                <h1>欢迎访问B06创新实验室的博客</h1>
-                <div class=”content”>
-                    hello  {{name}}!!
-                </div>
-            </div>
-        </div>
-    </body>
+    <script src="static/js/main.js"></script>
+    <style>
+        .draggable { width: 1200px;  padding: 0.5em; }
+        .hum { width: 250px;  padding: 0.5em; }
+	    .robo { width: 250px; padding: 0.5em; }
+    </style>
+    <script>
+
+
+
+  </script>
+</head>
+<body>
+
+<div class="container">
+    <div class="switch" data-on="success" size="mini">
+        语音<input type="checkbox"  name="my-checkbox"  checked />
+    </div>
+    <div class="draggable">
+        <!--<div style="float:left"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-content="左侧的 Popover 中的一些内容 —— show 方法" data-toggle="popover"  width="50" height="50"><span  class="hum alert alert-success">成功！很好地完成了提交。</span></div>-->
+        <!--<div style="float:right"><span  class="robo alert alert-danger">成功！很好地完成了提交。</span><img src="static/img/robo.jpg" class="img-circle" width="50" height="50"></div>-->
+        <table id="talk" width="50%">
+            <thead width="50%">
+            <th>
+            </th>
+            <th width="50%">
+            </th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                </td>
+                <td>
+                   <div style="float:right"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-placement="left" data-content="{{seq}}" data-toggle="popover"  width="50" height="50">
+                       <!--<span  class="robo alert alert-danger">成功！很好地完成了提交。</span>-->
+                   </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><img src="static/img/robo.jpg" class="img-circle popover-show" data-container="body" data-placement="right" data-content="{{res}}" data-toggle="popover"  width="50" height="50">
+                        <!--<span  class="hum alert alert-success">成功！很好地完成了提交。</span>-->
+                    </div>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table id="btnArea" width="50%">
+            <tr>
+                <td width="90%">
+                    <div class="form-group" >
+                        <textarea id="inputText" class="form-control" rows="3"></textarea>
+                    </div>
+                </td>
+                <td width="10%" valign="top">
+                    <div style="float:right">
+                        <button id="send" type="button" class="btn btn-success"  data-toggle="button">Send </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+</div>
+
+
+</body>
 </html>
