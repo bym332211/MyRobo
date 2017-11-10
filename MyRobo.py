@@ -42,24 +42,27 @@ class AsrHandler(tornado.web.RequestHandler):
 
 class WebHandler(tornado.web.RequestHandler):
     def get(self):
-        content = "hi"
-        res = getResponse(content)
-        self.render('./web/test.html', seq=content, res=res)
+        content = "hello"
+        res, mp3 = getResponse(content)
+        self.render('./web/test.html', seq=content, res=res, mp3=mp3)
 
 class AjaxHandler(tornado.web.RequestHandler):
     def post(self):
         type = self.get_argument('type')
+        playMode = self.get_argument('playMode')
         content = self.get_argument('content')
-        res = getResponse(content)
-        respon = {'res': res}
-        respon_json = tornado.escape.json_encode(respon)
-        self.write(res)
+        res, mp3 = getResponse(content, playMode)
+        if playMode == "server":
+            respon = {'res': res}
+        else :
+            respon = {'res': res, 'mp3': mp3}
+        self.write(respon)
 
-def getResponse(content):
+def getResponse(content, playMode = "web"):
     res = doCmd(content)
     if not res:
-        res = roboSay(content)
-    return res
+        res, mp3 = roboSay(content, playMode)
+    return res, mp3
 
 def doCmd(input):
     global currentMusicIdx
@@ -89,11 +92,11 @@ def playMusic():
     return "<iframe frameborder='no' display='none' border='0' marginwidth='0' marginheight='0' width=330 height=86 src='//music.163.com/outchain/player?type=2&id=" + micId + "&auto=1&height=66'></iframe>"
 
 
-def roboSay(input):
+def roboSay(input, playMode = "web"):
     res_seq = chat.chat(input)
-    tmp = res_seq
-    tts.say(tmp)
-    return res_seq
+    tts.say(res_seq, playMode)
+    mp3 = tts.latestMp3.replace('./web/static', 'static')
+    return res_seq, mp3
 #
 # class abc:
 #

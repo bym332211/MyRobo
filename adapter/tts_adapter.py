@@ -7,7 +7,7 @@ import time
 import os
 
 class tts:
-    tmpPath = './tmp/'
+    tmpPath = './web/static/sounds/tmp/'
     latestMp3 = tmpPath + 'audio_20170912091507.mp3'
     def __init__(self):
         APP_ID = '10079663'
@@ -19,14 +19,21 @@ class tts:
 
     def deleteMp3(self):
         list = os.listdir(self.tmpPath)
-        for f in list:
-            try :
+        if list.__len__() > 5:
+            f = list[0];
+            try:
                 print('delete latestMp3: ' + self.tmpPath + str(f))
                 os.remove(self.tmpPath + str(f))
             except Exception as e:
                 print(e)
+            # for f in list:
+            #     try :
+            #         print('delete latestMp3: ' + self.tmpPath + str(f))
+            #         os.remove(self.tmpPath + str(f))
+            #     except Exception as e:
+            #         print(e)
 
-    def say(self, seq):
+    def say(self, seq, playMode = "web"):
         cTime = time.strftime("%Y%m%d%H%M%S")
         self.deleteMp3()
         mp3 = self.tmpPath + 'audio_' + cTime + '.mp3'
@@ -34,7 +41,7 @@ class tts:
                                       {'vol':5,
                                        'spd':4,
                                        'pit':2,
-                                       'per':3,
+                                       'per':0,
                                        })
 
         # 识别正确返回语音二进制 错误则返回dict 参照下面错误码
@@ -43,17 +50,18 @@ class tts:
                 print('create ' + mp3)
                 f.write(result)
         time.sleep(1)
-        pygame.mixer.init()
-        print("Alert!!")
-        print('play ' + mp3)
+        if playMode == "server":
+            pygame.mixer.init()
+            print("Alert!!")
+            print('play ' + mp3)
 
-        pygame.mixer.music.load(mp3)
-        pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy():
-            pygame.time.delay(1)
-        pygame.mixer.music.stop()
-        pygame.mixer.quit()
-        pygame.quit()
+            pygame.mixer.music.load(mp3)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                pygame.time.delay(1)
+            pygame.mixer.music.stop()
+            pygame.mixer.quit()
+            pygame.quit()
         self.latestMp3 = mp3
 
 

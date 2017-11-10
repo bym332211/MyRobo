@@ -191,7 +191,7 @@ class recoder:
 
     def playListening(self):
         pygame.mixer.init()
-        pygame.mixer.music.load('./sounds/imlistening.wav')
+        pygame.mixer.music.load('./sounds/1.mp3')
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():
             pygame.time.delay(1)

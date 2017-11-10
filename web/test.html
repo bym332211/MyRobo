@@ -11,11 +11,18 @@
     <script src="static/js/bootstrap/bootstrap.min.js"></script>
     <script src="static/js/bootstrap/bootstrap-switch.min.js"></script>
 
+    	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="static/js/main.js"></script>
     <style>
-        .draggable { width: 1200px;  padding: 0.5em; }
+        .container { width: 50%;  padding: 0.5em; }
+        .draggable { width: 100%;  padding: 0.5em; }
+        .content { width: 100%;  padding: 0.5em; }
         .hum { width: 250px;  padding: 0.5em; }
 	    .robo { width: 250px; padding: 0.5em; }
+	    table {  width: 100%;}
     </style>
     <script>
 
@@ -24,49 +31,89 @@
   </script>
 </head>
 <body>
+<div class="progress progress-striped">
+	<div class="progress-bar progress-bar-success" role="progressbar"
+		 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+		 style="width: 30%;">
+		<span class="sr-only">30% 完成</span>
+	</div>
+	<div class="progress-bar progress-bar-info" role="progressbar"
+		 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+		 style="width: 20%;">
+		<span class="sr-only">20% 完成（信息）</span>
+	</div>
+	<div class="progress-bar progress-bar-warning" role="progressbar"
+		 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+		 style="width: 20%;">
+		<span class="sr-only">20% 完成（警告）</span>
+	</div>
+		<div class="progress-bar progress-bar-danger" role="progressbar"
+		 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+		 style="width: 30%;">
+		<span class="sr-only">30% 完成（警告）</span>
+	</div>
+</div>
 
 <div class="container">
-    <div class="switch" data-on="success" size="mini">
-        语音<input type="checkbox"  name="my-checkbox"  checked />
-    </div>
     <div class="draggable">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="alert alert-danger">
+                    <strong>警告！</strong>您的网络连接有问题。
+                </div>
+                <div class="switch" data-on="success" data-off="danger" size="mini" id="tests">
+                    语音<input type="checkbox"  id="my-checkbox" checked  value="1"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
         <!--<div style="float:left"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-content="左侧的 Popover 中的一些内容 —— show 方法" data-toggle="popover"  width="50" height="50"><span  class="hum alert alert-success">成功！很好地完成了提交。</span></div>-->
         <!--<div style="float:right"><span  class="robo alert alert-danger">成功！很好地完成了提交。</span><img src="static/img/robo.jpg" class="img-circle" width="50" height="50"></div>-->
-        <table id="talk" width="50%">
-            <thead width="50%">
-            <th>
-            </th>
-            <th width="50%">
-            </th>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                </td>
-                <td>
-                   <div style="float:right"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-placement="left" data-content="{{seq}}" data-toggle="popover"  width="50" height="50">
-                       <!--<span  class="robo alert alert-danger">成功！很好地完成了提交。</span>-->
-                   </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div><img src="static/img/robo.jpg" class="img-circle popover-show" data-container="body" data-placement="right" data-content="{{res}}" data-toggle="popover"  width="50" height="50">
-                        <!--<span  class="hum alert alert-success">成功！很好地完成了提交。</span>-->
-                    </div>
-                </td>
-                <td>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="talk">
+                    <thead width="50%">
+                    <th>
+                    </th>
+                    <th width="50%">
+                    </th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                           <div style="float:right"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-placement="left" data-content="{{seq}}" data-toggle="popover"  width="50" height="50">
+                               <!--<span  class="robo alert alert-danger">成功！很好地完成了提交。</span>-->
+                           </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div><img src="static/img/robo.jpg" class="img-circle popover-show" data-container="body" data-placement="right" data-content="{{res}}" data-toggle="popover"  width="50" height="50">
+                                <!--<span  class="hum alert alert-success">成功！很好地完成了提交。</span>-->
+                            </div>
+                        </td>
+                        <td>
 
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <br>
-        <table id="btnArea" width="50%">
+        <div id="audioDiv">
+            <audio id="player" controls="controls" autoplay="autoplay" src="{{mp3}}" hidden >
+            </audio>
+        </div>
+        <table id="btnArea">
             <tr>
                 <td width="90%">
                     <div class="form-group" >
-                        <textarea id="inputText" class="form-control" rows="3"></textarea>
+                        <textarea id="inputText" class="form-control" rows="1"></textarea>
                     </div>
                 </td>
                 <td width="10%" valign="top">
