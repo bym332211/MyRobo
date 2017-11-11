@@ -40,22 +40,38 @@ class AsrHandler(tornado.web.RequestHandler):
         res = getResponse(content)
         self.write("Robo say:" + res)
 
+    def post(self):
+        rec = Rec()
+        rec.start()
+        content = asr.read_local()
+        res, mp3 = getResponse(content, "server")
+        respon = {'res': res, 'mp3': mp3}
+        self.write(respon)
+
 class WebHandler(tornado.web.RequestHandler):
     def get(self):
-        content = "hello"
-        res, mp3 = getResponse(content)
-        self.render('./web/test.html', seq=content, res=res, mp3=mp3)
+        # content = "hello"
+        # res, mp3 = getResponse(content)
+        self.render('./web/test.html', seq="", res="System start", mp3="")
 
 class AjaxHandler(tornado.web.RequestHandler):
     def post(self):
         type = self.get_argument('type')
-        playMode = self.get_argument('playMode')
-        content = self.get_argument('content')
-        res, mp3 = getResponse(content, playMode)
-        if playMode == "server":
-            respon = {'res': res}
-        else :
-            respon = {'res': res, 'mp3': mp3}
+        if type == "web":
+            playMode = self.get_argument('playMode')
+            content = self.get_argument('content')
+            res, mp3 = getResponse(content, playMode)
+            if playMode == "server":
+                respon = {'res': res}
+            else :
+                respon = {'res': res, 'mp3': mp3}
+        elif type == "asr":
+            rec = Rec()
+            rec.start()
+            content = asr.read_local()
+            res, mp3 = getResponse(content, "server")
+            respon = {'res': res, 'content':content, 'mp3': mp3}
+            # self.write(respon)
         self.write(respon)
 
 def getResponse(content, playMode = "web"):

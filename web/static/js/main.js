@@ -13,8 +13,7 @@ $(document).ready(function(){
         $this.draggable();
     });
     $(function () {
-        $('.popover-show').popover('show');
-        $('.popover-show').popover('disable');
+        showpopover();
     });
     $(".switch").each(function() {
         $this = $(this);
@@ -36,13 +35,17 @@ $(document).ready(function(){
             onSwitchChange:function(event,state){
                 if(state==true){
                     $(this).val("1");
+                    $(this).attr("checked", true);
 //                    $(".alert").css({'visibility':'visible'});
                     $(".alert").show();
-                    $('.popover-show').popover('togg');
+                    refreshpopover();
+                    asrListening();
                 }else{
                     $(this).val("0");
+                    $(this).attr("checked", false);
 //                    $(".alert").css({'visibility':'hidden'});
                     $(".alert").hide();
+                    refreshpopover();
                 }
             }
         });
@@ -60,8 +63,7 @@ $(document).ready(function(){
         var $trSeq = "<tr><td></td><td><div style='float:right'><img src='static/img/hum.jpg' class='img-circle popover-show' data-container='body' data-placement='left' data-toggle='popover'  width='50' height='50'  data-content='" + $content + "'></div></td></tr>"
         var $table = $("#talk");
         appendTr($table, $trSeq)
-        $('.popover-show').popover('show');
-        $('.popover-show').popover('disable');
+        showpopover();
         $.ajax({
             url: "/ajax",
             data: {
@@ -80,27 +82,70 @@ $(document).ready(function(){
                     player.play();
                 }
                 appendTr($table, $trRep)
-                $('.popover-show').popover('show');
-                $('.popover-show').popover('disable');
+                showpopover();
             }
         });
     });
 });
+
+function asrListening() {
+
+    setInterval(function(){
+//            host = window.location.host
+//            $.post("http://"+host+"/index.php/Article/cpMes/value/1");
+    var $table = $("#talk");
+    $.ajax({
+        url: "/ajax",
+        data: {
+            type:"asr",
+            playMode:"server"
+        },
+        dataType: "text",
+        type: "POST",
+        success: function(data) {
+                var obj = jQuery.parseJSON(data);
+                var $trSeq = "<tr><td></td><td><div style='float:right'><img src='static/img/hum.jpg' class='img-circle popover-show' data-container='body' data-placement='left' data-toggle='popover'  width='50' height='50'  data-content='" + obj.content + "'></div></td></tr>"
+                var $trRep = "<tr><td><div><img src='static/img/robo.jpg' class='img-circle popover-show' data-container='body' data-placement='right' data-toggle='popover'  width='50' height='50'  data-content='" + obj.res + "'></div></td></tr>"
+//                if ($playMode == "web") {
+//                    var player = $("#player")[0]
+//                    player.src=obj.mp3;
+//                    player.play();
+//                }
+                appendTr($table, $trSeq)
+                appendTr($table, $trRep)
+                showpopover();
+            }
+    });
+
+    },5000);
+}
 function appendTr(tableObj, trStr) {
     tableObj.append(trStr);
-    var cnt = 0;
-    tableObj.find("tr").each(function () {
-        cnt += 1;
-        if (cnt > 8) {
-            $trObj = tableObj.find("tbody").find("tr:first");
-            deleteTr($trObj);
-        }
-    })
+    cnt = 0;
+    tableObj.find("tbody").find("tr").each(function() {
+        cnt = cnt + 1;
+    });
+    if (cnt > 6) {
+        deleteTr(tableObj.find("tbody").find("tr:first"))
+    }
+    showpopover();
 }
 function deleteTr(trObj) {
-//    trObj.find(".popover-show").each(function() {
-//        $this = $(this);
-//        $this.popover("destroy");
-//    })
-//    trObj.remove();
+    trObj.find(".popover-show:first").popover('destroy');
+    trObj.remove();
+}
+
+function showpopover(){
+    $('.popover-show').popover('show');
+//    $('.popover-show').popover('disable');
+}
+
+function hidepopover(){
+    $('.popover-show').popover('hide');
+//    $('.popover-show').popover('disable');
+}
+
+function refreshpopover() {
+//    hidepopover();
+    showpopover();
 }

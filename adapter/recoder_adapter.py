@@ -116,7 +116,7 @@ class recoder:
                     num_voiced = sum(ring_buffer_flags)
                     if num_voiced > 0.9 * self.NUM_WINDOW_CHUNKS:
                         sys.stdout.write(' Open ')
-                        self.imlistening()
+                        # self.imlistening()
                         triggered = True
                         start_point = index - self.CHUNK_SIZE * 20  # start point
                         # voiced_frames.extend(ring_buffer)

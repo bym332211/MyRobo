@@ -11,9 +11,9 @@
     <script src="static/js/bootstrap/bootstrap.min.js"></script>
     <script src="static/js/bootstrap/bootstrap-switch.min.js"></script>
 
-    	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
-	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    	<!--<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">-->
+	<!--&lt;!&ndash;<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>&ndash;&gt;-->
+	<!--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
     <script src="static/js/main.js"></script>
     <style>
@@ -59,10 +59,10 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="alert alert-danger">
-                    <strong>警告！</strong>您的网络连接有问题。
+                    <strong>警告！</strong>已开始监听。
                 </div>
                 <div class="switch" data-on="success" data-off="danger" size="mini" id="tests">
-                    语音<input type="checkbox"  id="my-checkbox" checked  value="1"/>
+                    语音<input type="checkbox"  id="asrcheckbox" checked="false"  value="0"/>
                 </div>
             </div>
         </div>
@@ -85,16 +85,20 @@
                         <td>
                         </td>
                         <td>
-                           <div style="float:right"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-placement="left" data-content="{{seq}}" data-toggle="popover"  width="50" height="50">
-                               <!--<span  class="robo alert alert-danger">成功！很好地完成了提交。</span>-->
-                           </div>
+                            {%if seq%}
+                            <div style="float:right"><img src="static/img/hum.jpg" class="img-circle popover-show" data-container="body" data-placement="left" data-content="{{seq}}" data-toggle="popover"  width="50" height="50">
+                                <!--<span  class="robo alert alert-danger">成功！很好地完成了提交。</span>-->
+                            </div>
+                            {%end%}
                         </td>
                     </tr>
                     <tr>
                         <td>
+                            {%if res%}
                             <div><img src="static/img/robo.jpg" class="img-circle popover-show" data-container="body" data-placement="right" data-content="{{res}}" data-toggle="popover"  width="50" height="50">
                                 <!--<span  class="hum alert alert-success">成功！很好地完成了提交。</span>-->
                             </div>
+                            {%end%}
                         </td>
                         <td>
 
