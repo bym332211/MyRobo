@@ -16,7 +16,8 @@ from adapter.chat_adapter import chat as Chat
 from adapter.recoder_adapter import recoder as Rec
 from adapter.tts_adapter import tts as Tts
 from adapter.commonds_adapter import cmdLoader as Cmd
-from adapter.music_adapter import music as Music
+
+from player.music_player import music_player as mplayer
 
 define("port", default=7778, help="run on the given port", type=int)
 chat = Chat()
@@ -24,8 +25,8 @@ tts = Tts()
 asr = Asr()
 
 cmd = Cmd()
-music = Music()
-currentMusicIdx = 0
+# music = Music()
+# currentMusicIdx = 0
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         content = self.get_argument('content')
@@ -81,31 +82,18 @@ def getResponse(content, playMode = "web"):
     return res, mp3
 
 def doCmd(input):
-    global currentMusicIdx
+    # global currentMusicIdx
     cmd.getCmd(input)
     if cmd.cmds_base == 'common':
         pass
     elif cmd.cmd_type == 'music':
-        if cmd.detail_cmd == 'play':
-            return playMusic()
-        elif cmd.detail_cmd == 'next':
-            currentMusicIdx = currentMusicIdx + 1
-            return playMusic()
-        elif cmd.detail_cmd == 'prev':
-            currentMusicIdx = currentMusicIdx - 1
-            return playMusic()
-        elif cmd.detail_cmd == 'stop' or cmd.detail_cmd == 'pause':
-            return 'stop'
-        elif cmd.detail_cmd == 'continue':
-            playMusic()
+        player = mplayer();
+        player.ctlCenter(cmd.detail_cmd)
+    elif cmd.cmd_type == 'video':
+        pass
     elif cmd.cmds_base == 'other':
         pass
 
-def playMusic():
-    global currentMusicIdx
-    micId, currentMusicIdx = music.getMusic(currentMusicIdx)
-    print(micId)
-    return "<iframe frameborder='no' display='none' border='0' marginwidth='0' marginheight='0' width=330 height=86 src='//music.163.com/outchain/player?type=2&id=" + micId + "&auto=1&height=66'></iframe>"
 
 
 def roboSay(input, playMode = "web"):

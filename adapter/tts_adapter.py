@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from aip import AipSpeech
-import pygame
-import sys
+from player.music_player import music_player as mplayer
 import time
 import os
 
@@ -51,17 +50,8 @@ class tts:
                 f.write(result)
         time.sleep(1)
         if playMode == "server":
-            pygame.mixer.init()
-            print("Alert!!")
-            print('play ' + mp3)
-
-            pygame.mixer.music.load(mp3)
-            pygame.mixer.music.play()
-            while pygame.mixer.music.get_busy():
-                pygame.time.delay(1)
-            pygame.mixer.music.stop()
-            pygame.mixer.quit()
-            pygame.quit()
+            player = mplayer()
+            player.playLocalMusic(mp3)
         self.latestMp3 = mp3
 
 

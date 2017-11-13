@@ -1,8 +1,6 @@
 # 引入Speech SDK
 from aip import AipSpeech
-import pygame
-import time
-import wave
+from player.music_player import music_player as mplayer
 
 #tex	String	合成的文本，使用UTF-8编码，请注意文本长度必须小于1024字节	是
 #lang	String	语言选择,填写zh	是
@@ -30,12 +28,8 @@ def robo_say(someword):
     if not isinstance(result, dict):
         with open('auido.mp3', 'wb') as f:
             f.write(result)
-    pygame.mixer.init()
-    pygame.mixer.music.load('./auido.mp3')
-
-    pygame.mixer.music.play()
-    time.sleep(10)
-    pygame.mixer.music.stop()
+    player = mplayer()
+    player.playLocalMusic('./auido.mp3')
 
 # 初始化AipSpeech对象
 aipSpeech = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
